@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		
+	</title>
+	<style> 
+	.result {
+		width: 286px;
+		height: 40px;
+		border-style: solid;
+		text-align: right;
+		display: table-cell;
+  		vertical-align:middle;
+	}
+	.btn {
+		width: 70px;
+		height: 30px;
+		margin-top:5px;
+		background-color: #E8E8E8 ;
+		
+	}
+	.operator{
+		background-color: #C8C8C8;
+	}
+	.sum{
+		background-color: lightblue;
+	}
+	</style>
+</head>
+<body>
+<div id='first'>
+<div  id="result" class='result'></div>
+<div class='block'>
+<button type="button" class='btn' onclick="num('7')">7</button>
+<button type="button" class='btn' onclick="num('8')">8</button>
+<button type="button" class='btn' onclick="num('9')">9</button>
+<button type="button" class='btn operator' onclick="operation('/')">/</button>
+</div>
+<div class='block'>
+<button type="button" class='btn' onclick="num('4')">4</button>
+<button type="button" class='btn' onclick="num('5')">5</button>
+<button type="button" class='btn' onclick="num('6')">6</button>
+<button type="button" class='btn operator' onclick="operation('*')">*</button>
+</div>
+<div class='block'>
+<button type="button" class='btn' onclick="num('1')">1</button>
+<button type="button" class='btn' onclick="num('2')">2</button>
+<button type="button" class='btn' onclick="num('3')">3</button>
+<button type="button" class='btn operator' onclick="operation('-')">-</button>
+</div>
+<div class='block'>
+<button type="button" class='btn' onclick="num('0')">0</button>
+<button type="button" class='btn operator' onclick="CE()">CE</button>
+<button type="button" class='btn sum' onclick="res()">=</button>
+<button type="button" class='btn operator' onclick="operation('+')">+</button>
+</div>
+</div>
+
+
+<script>
+	var number=0;
+	var first=0;
+	var operator=0;
+	var sum=0;
+	function num(num) {
+		if (number===0){
+			number=num;
+		}else
+		{
+		number=number+num;
+		}
+
+    document.getElementById("result").innerHTML = number;
+	}
+
+	function operation(a){
+		if (operator===0){
+			operator=a;
+			first= document.getElementById("result").innerHTML;
+			
+			number=0;
+			document.getElementById("result").innerHTML = a;
+		}else 
+		{
+			if (operator==='+'){
+				sum=Number(first)+Number(number);
+			}
+			if (operator==='-'){
+				sum=Number(first)-Number(number);
+			}
+			if (operator==='*'){
+				sum=Number(first)*Number(number);
+			}
+			if (operator==='/'){
+				sum=Number(first)/Number(number);
+			}
+			document.getElementById("result").innerHTML = sum;
+			
+			operator=0;
+		}
+		
+		
+	}
+	function res(){
+		if (operator==='+'){
+				sum=Number(first)+Number(number);
+			}
+			if (operator==='-'){
+				sum=Number(first)-Number(number);
+			}
+			if (operator==='*'){
+				sum=Number(first)*Number(number);
+			}
+			if (operator==='/'){
+				sum=Number(first)/Number(number);
+			}
+			document.getElementById("result").innerHTML = sum;
+		
+			operator=0;
+
+	}
+	function CE(){	
+		sum=0;
+		operator=0;
+		number=0;
+		first=0;
+		document.getElementById("result").innerHTML = "";
+
+	}
+
+document.onreadystatechange = () => {
+  if (document.readyState === 'complete') {
+ 	
+  }
+};
+</script>
+</body>
+</html>
