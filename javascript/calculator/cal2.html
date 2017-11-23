@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		
+	</title>
+	<style> 
+	.result {
+		width: 286px;
+		height: 40px;
+		border-style: solid;
+		text-align: right;
+		display: table-cell;
+  		vertical-align:middle;
+	}
+	.btn {
+		width: 70px;
+		height: 30px;
+		margin-top:5px;
+		background-color: #E8E8E8 ;
+		
+	}
+	.operator{
+		background-color: #C8C8C8;
+	}
+	.sum{
+		background-color: lightblue;
+	}
+	</style>
+</head>
+<body>
+<div id='second'>
+<div  id="resultvtor" class='result'></div>
+<div class='block'>
+<button type="button" class='btn' onclick="vnesi('7')">7</button>
+<button type="button" class='btn' onclick="vnesi('8')">8</button>
+<button type="button" class='btn' onclick="vnesi('9')">9</button>
+<button type="button" class='btn operator' onclick="vnesi('/')">/</button>
+</div>
+<div class='block'>
+<button type="button" class='btn' onclick="vnesi('4')">4</button>
+<button type="button" class='btn' onclick="vnesi('5')">5</button>
+<button type="button" class='btn' onclick="vnesi('6')">6</button>
+<button type="button" class='btn operator' onclick="vnesi('*')">*</button>
+</div>
+<div class='block'>
+<button type="button" class='btn' onclick="vnesi('1')">1</button>
+<button type="button" class='btn' onclick="vnesi('2')">2</button>
+<button type="button" class='btn' onclick="vnesi('3')">3</button>
+<button type="button" class='btn operator' onclick="vnesi('-')">-</button>
+</div>
+<div class='block'>
+<button type="button" class='btn' onclick="vnesi('0')">0</button>
+<button type="button" class='btn operator' onclick="CEvtor()">CE</button>
+<button type="button" class='btn sum' onclick="resvtor()">=</button>
+<button type="button" class='btn operator' onclick="vnesi('+')">+</button>
+</div>
+</div>
+<script> 
+	var zaresenie=0;
+
+	function vnesi(a){
+		if (zaresenie===0){
+			zaresenie=a;
+		}else
+		{
+		zaresenie=zaresenie+a;
+		}
+		 document.getElementById("resultvtor").innerHTML = zaresenie;
+	}
+	function resvtor(){
+		zaresenie=zaresenie+' ';
+		var n = zaresenie.length;
+		var number=0;
+		var k=0;
+		var sum=0;
+		var operator=0;
+		var todo=0;
+		for (i=0;i<n;i++){
+			if (zaresenie[i]!='+' && zaresenie[i]!='-' && zaresenie[i]!='/' && zaresenie[i]!='*' && zaresenie[i]!=' ' ){
+				number = number*10+Number(zaresenie[i]);
+				k++;
+			} else {
+				todo=operator;
+				operator=zaresenie[i];
+				if (k===1){
+					sum=number;
+				}	
+				else {
+				if (todo==='+'){
+					var sum=sum+Number(number);
+
+				}
+				if (todo==='*'){
+					var sum=sum*Number(number);
+				}
+				if (todo==='-'){
+					var sum=sum-Number(number);
+				}
+				if (todo==='/'){
+					var sum=sum/Number(number);
+				}
+				}
+
+				number=0;
+				
+			}
+			
+		}
+		document.getElementById("resultvtor").innerHTML = sum;
+	}
+	function CEvtor(){
+		zaresenie=0;
+		document.getElementById("resultvtor").innerHTML = "";
+	}
+
+
+</script>
+
+</body>
+</html>

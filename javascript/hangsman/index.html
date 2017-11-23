@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+	.first {
+		 display: inline-block;
+	}
+	.hangsman {
+		 display: inline-block;
+	}
+	.tastatura{
+		text-align: center;
+	}
+	.key{
+		height: 30px;
+		width: 30px;
+		margin-top: 5px;
+		background-color: lightblue;
+	}
+	.display {
+		text-align: center;
+	}	
+	#result {
+		font-size:40px;
+		margin-bottom: 50px;
+	}
+	.disabled {
+		background-color: red;
+	}
+	.disabledfound {
+		background-color: limegreen;
+	}
+	.again{
+	 	text-align: center;
+	}
+	.againnone{
+	  display: none;
+	}
+	.statusw {
+		font-size: 50px;
+		background-color: limegreen;
+		text-align: center;
+	}
+	.statusl {
+		font-size: 50px;
+		background-color: red;
+		text-align: center;
+	}
+	.btnagain {
+		height: 50px;
+		width: 300px;
+		font-size: 30px;
+	}
+	</style>
+</head>
+<body style="background-color: darkgray;">
+<div class='container'>
+		<div class='first' >
+				<div class='display'>
+					<div id='result'> </div>
+
+				</div>
+				<div class='tastatura'> 
+					<div >
+						<button id="A" type="button" class='key' onclick="key('A')">A</button>
+						<button id="B" type="button" class='key' onclick="key('B')">B</button>
+						<button id="C" type="button" class='key' onclick="key('C')">C</button>
+						<button id="D" type="button" class='key' onclick="key('D')">D</button>
+						<button id="E" type="button" class='key' onclick="key('E')">E</button>
+						<button id="F" type="button" class='key' onclick="key('F')">F</button>
+						<button id="G" type="button" class='key' onclick="key('G')">G</button>
+						<button id="H" type="button" class='key' onclick="key('H')">H</button>
+						<button id="I" type="button" class='key' onclick="key('I')">I</button>
+						<button id="J" type="button" class='key' onclick="key('J')">J</button>
+						<button id='K' type="button" class='key' onclick="key('K')">K</button>
+					</div>
+					<div>
+						<button id="L" type="button" class='key' onclick="key('L')">L</button>
+						<button id="M" type="button" class='key' onclick="key('M')">M</button>
+						<button id="N" type="button" class='key' onclick="key('N')">N</button>
+						<button id="O" type="button" class='key' onclick="key('O')">O</button>
+						<button id="P" type="button" class='key' onclick="key('P')">P</button>
+						<button id="Q" type="button" class='key' onclick="key('Q')">Q</button>
+						<button id="R" type="button" class='key' onclick="key('R')">R</button>
+						<button id="S" type="button" class='key' onclick="key('S')">S</button>
+						<button id="T" type="button" class='key' onclick="key('T')">T</button>
+						<button id="U" type="button" class='key' onclick="key('U')">U</button>
+					</div>
+					<div>
+					<button id="V" type="button" class='key' onclick="key('V')">V</button>
+					<button id="W" type="button" class='key' onclick="key('W')">W</button>
+					<button id="X" type="button" class='key' onclick="key('X')">X</button>
+					<button id="Y" type="button" class='key' onclick="key('Y')">Y</button>
+					<button id="Z" type="button" class='key' onclick="key('Z')">Z</button>
+					</div>
+
+				</div>
+		</div>
+		<div class='hangsman'>
+			<img id='hangsmen' src='img/Hangman-0.png'>
+		</div>
+		<div id='status' > 
+			
+		</div>
+		<div id="again" class='againnone'>
+		<input class='btnagain' type='submit' value="START AGAIN" onclick="again()">
+		</div>
+</div>
+</body>
+<script>
+		var zborcinja = ["JABOLKO", "VOLVO", "BMW","ILE","BABA"];
+		var random = Math.floor(Math.random() * zborcinja.length) + 0   
+		var resenie = zborcinja[random];
+		var zaresenie = new Array();
+		var display="";
+		var found=0;
+		var br=0;
+		
+
+		for (i=0;i<resenie.length;i++){
+			zaresenie.push("_");
+		}
+		for (i=0;i<zaresenie.length;i++){
+			display=display+zaresenie[i]+" ";
+		}
+		document.getElementById("result").innerHTML = display;
+
+ 		function again(){
+ 			location.reload();
+ 		}
+		function key(bukva){
+
+			//proverka
+			for (i=0;i<resenie.length;i++){
+				if (resenie[i]==bukva) {
+					zaresenie[i]=bukva;
+					found=1;
+
+				}
+			}
+			//disable na kopceto
+			document.getElementById(bukva).setAttribute("disabled", "disabled");
+			document.getElementById(bukva).setAttribute("class", "key disabled");
+			if (found===1){
+				document.getElementById(bukva).setAttribute("class", "key disabledfound");
+			}
+			//za pecatenje
+			var display="";
+			for (i=0;i<zaresenie.length;i++){
+				display=display+zaresenie[i]+" ";
+			}
+			document.getElementById("result").innerHTML = display;
+
+			// lose
+			if (found!=1){
+				br++;
+				var slika='img/Hangman-'+br+".png";
+				document.getElementById("hangsmen").setAttribute("src", slika);
+
+				if (br==6) {
+					var status = document.getElementById("status");
+					status.innerHTML ="LOSE";
+					status.setAttribute("class", "statusl");
+					var kopcinja = document.querySelectorAll("button"); 
+					document.getElementById("again").setAttribute("class", "again");;  
+					for (j=0;j<kopcinja.length;j++){
+						kopcinja[j].setAttribute("disabled", "disabled");
+					} 
+
+				}
+			}
+			//win 
+			var win=1;
+			for (i=0;i<zaresenie.length;i++){
+				if(zaresenie[i]=='_'){
+					win=0;
+				}
+			}
+
+			if (win==1){
+					var status = document.getElementById("status");
+					status.innerHTML ="WIN";
+					status.setAttribute("class", "statusw");
+					var kopcinja = document.querySelectorAll("button");  
+					document.getElementById("again").setAttribute("class", "again");;
+					for (j=0;j<kopcinja.length;j++){
+						kopcinja[j].setAttribute("disabled", "disabled");
+					} 
+			}	
+
+			found=0;//reset found
+		}
+
+		// vnesuvanje od tastatura
+		window.onkeypress = function(e) {
+    	if (e.which>96 && e.which<123) {
+       	
+   		switch (e.which){
+   			case 97:key("A");break;
+   			case 98:key("B");break;
+   			case 99:key("C");break;
+   			case 100:key("D");break;
+   			case 101:key("E");break;
+   			case 102:key("F");break;
+   			case 103:key("G");break;
+   			case 104:key("H");break;
+   			case 105:key("I");break;
+   			case 106:key("J");break;
+   			case 107:key("K");break;
+   			case 108:key("L");break;
+   			case 109:key("M");break;
+   			case 110:key("N");break;
+   			case 111:key("O");break;
+   			case 112:key("P");break;
+   			case 113:key("Q");break;
+   			case 114:key("R");break;
+   			case 115:key("S");break;
+   			case 116:key("T");break;
+   			case 117:key("U");break;
+   			case 118:key("V");break;
+   			case 119:key("W");break;
+   			case 120:key("X");break;
+   			case 121:key("Y");break;
+   			case 122:key("Z");break;
+
+   		}
+   		}
+        }
+	
+  	
+</script>
+</html>
+		
+			
+				
